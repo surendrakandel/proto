@@ -1,0 +1,8 @@
+vendor
+.env
+*.env
+config.*
+node_modules
+.exe
+.vscode 
+go.sum

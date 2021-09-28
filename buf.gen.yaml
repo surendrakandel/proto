@@ -1,0 +1,23 @@
+version: v1
+plugins:
+  - name: go
+    out: codegen/go
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: codegen/go
+    opt:
+      - paths=source_relative
+  - name: grpc-gateway
+    out: codegen/go
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true
+  - name: openapiv2
+    out: codegen/swagger
+    opt:
+      - logtostderr=true
+  - name: govalidators
+    out: codegen/go
+    opt:
+      - paths=source_relative
