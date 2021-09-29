@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package authentication;
+package auth;
 option go_package = "github.com/surendrakandel/proto/codegen/go/auth";
 
 

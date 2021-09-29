@@ -34,7 +34,7 @@ func NewAuthenticationServiceClient(cc grpc.ClientConnInterface) AuthenticationS
 
 func (c *authenticationServiceClient) ValidationBearerToken(ctx context.Context, in *ValidationBearerTokenRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/authentication.AuthenticationService/ValidationBearerToken", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.AuthenticationService/ValidationBearerToken", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *authenticationServiceClient) ValidationBearerToken(ctx context.Context,
 
 func (c *authenticationServiceClient) DispatchClientCommand(ctx context.Context, in *DispatchAuthCommandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/authentication.AuthenticationService/DispatchClientCommand", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.AuthenticationService/DispatchClientCommand", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func (c *authenticationServiceClient) DispatchClientCommand(ctx context.Context,
 
 func (c *authenticationServiceClient) DispatchTokenCommand(ctx context.Context, in *DispatchAuthCommandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/authentication.AuthenticationService/DispatchTokenCommand", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.AuthenticationService/DispatchTokenCommand", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func _AuthenticationService_ValidationBearerToken_Handler(srv interface{}, ctx c
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/authentication.AuthenticationService/ValidationBearerToken",
+		FullMethod: "/auth.AuthenticationService/ValidationBearerToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthenticationServiceServer).ValidationBearerToken(ctx, req.(*ValidationBearerTokenRequest))
@@ -123,7 +123,7 @@ func _AuthenticationService_DispatchClientCommand_Handler(srv interface{}, ctx c
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/authentication.AuthenticationService/DispatchClientCommand",
+		FullMethod: "/auth.AuthenticationService/DispatchClientCommand",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthenticationServiceServer).DispatchClientCommand(ctx, req.(*DispatchAuthCommandRequest))
@@ -141,7 +141,7 @@ func _AuthenticationService_DispatchTokenCommand_Handler(srv interface{}, ctx co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/authentication.AuthenticationService/DispatchTokenCommand",
+		FullMethod: "/auth.AuthenticationService/DispatchTokenCommand",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthenticationServiceServer).DispatchTokenCommand(ctx, req.(*DispatchAuthCommandRequest))
@@ -153,7 +153,7 @@ func _AuthenticationService_DispatchTokenCommand_Handler(srv interface{}, ctx co
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AuthenticationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "authentication.AuthenticationService",
+	ServiceName: "auth.AuthenticationService",
 	HandlerType: (*AuthenticationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -170,5 +170,5 @@ var AuthenticationService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "authentication/authentication.proto",
+	Metadata: "auth/authentication.proto",
 }
