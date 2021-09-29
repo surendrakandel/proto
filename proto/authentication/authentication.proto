@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package authentication;
+option go_package = "github.com/surendrakandel/proto/codegen/go/auth";
+
+
+import "google/protobuf/empty.proto";
+
+
+
+// AuthenticationService handles auth token verification
+service AuthenticationService {
+  rpc ValidationBearerToken (ValidationBearerTokenRequest) returns (google.protobuf.Empty);
+  rpc DispatchClientCommand (DispatchAuthCommandRequest) returns (google.protobuf.Empty);
+  rpc DispatchTokenCommand (DispatchAuthCommandRequest) returns (google.protobuf.Empty);
+}
+
+// ValidationBearerTokenRequest validates auth token
+message ValidationBearerTokenRequest {
+  string token = 1;
+}
+
+// DispatchAuthCommandRequest is passed when dispatching
+message DispatchAuthCommandRequest {
+  string name = 1;
+  bytes payload = 2;
+}

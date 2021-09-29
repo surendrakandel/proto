@@ -6,3 +6,5 @@ node_modules
 .exe
 .vscode 
 go.sum
+*.lock
+go.sum
