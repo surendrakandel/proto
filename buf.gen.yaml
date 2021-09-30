@@ -1,15 +1,15 @@
 version: v1
 plugins:
   - name: go
-    out: /Users/surendrakandel/finalproject/grpcauth/server/v1
+    out: codegen/go
     opt:
       - paths=source_relative
   - name: go-grpc
-    out: /Users/surendrakandel/finalproject/grpcauth/server/v1
+    out: codegen/go
     opt:
       - paths=source_relative
   - name: grpc-gateway
-    out: /Users/surendrakandel/finalproject/grpcauth/server/v1
+    out: codegen/go
     opt:
       - paths=source_relative
       - generate_unbound_methods=true

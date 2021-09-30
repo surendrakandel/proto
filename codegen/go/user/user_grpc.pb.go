@@ -28,7 +28,7 @@ type UserClient interface {
 	GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*ShortUser, error)
 	GetByIds(ctx context.Context, in *GetByIdsRequest, opts ...grpc.CallOption) (*ShortUsers, error)
 	ModifyRights(ctx context.Context, in *ModifyRightsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	SignUp(ctx context.Context, in *SignUpUser, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SignUpRequest(ctx context.Context, in *SignUpUserData, opts ...grpc.CallOption) (*SignUpResponseData, error)
 }
 
 type userClient struct {
@@ -120,9 +120,9 @@ func (c *userClient) ModifyRights(ctx context.Context, in *ModifyRightsRequest, 
 	return out, nil
 }
 
-func (c *userClient) SignUp(ctx context.Context, in *SignUpUser, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/user.User/SignUp", in, out, opts...)
+func (c *userClient) SignUpRequest(ctx context.Context, in *SignUpUserData, opts ...grpc.CallOption) (*SignUpResponseData, error) {
+	out := new(SignUpResponseData)
+	err := c.cc.Invoke(ctx, "/user.User/SignUpRequest", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +142,7 @@ type UserServer interface {
 	GetById(context.Context, *GetByIdRequest) (*ShortUser, error)
 	GetByIds(context.Context, *GetByIdsRequest) (*ShortUsers, error)
 	ModifyRights(context.Context, *ModifyRightsRequest) (*emptypb.Empty, error)
-	SignUp(context.Context, *SignUpUser) (*emptypb.Empty, error)
+	SignUpRequest(context.Context, *SignUpUserData) (*SignUpResponseData, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -177,8 +177,8 @@ func (UnimplementedUserServer) GetByIds(context.Context, *GetByIdsRequest) (*Sho
 func (UnimplementedUserServer) ModifyRights(context.Context, *ModifyRightsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ModifyRights not implemented")
 }
-func (UnimplementedUserServer) SignUp(context.Context, *SignUpUser) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
+func (UnimplementedUserServer) SignUpRequest(context.Context, *SignUpUserData) (*SignUpResponseData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUpRequest not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -355,20 +355,20 @@ func _User_ModifyRights_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignUpUser)
+func _User_SignUpRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignUpUserData)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).SignUp(ctx, in)
+		return srv.(UserServer).SignUpRequest(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user.User/SignUp",
+		FullMethod: "/user.User/SignUpRequest",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).SignUp(ctx, req.(*SignUpUser))
+		return srv.(UserServer).SignUpRequest(ctx, req.(*SignUpUserData))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -417,8 +417,8 @@ var User_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _User_ModifyRights_Handler,
 		},
 		{
-			MethodName: "SignUp",
-			Handler:    _User_SignUp_Handler,
+			MethodName: "SignUpRequest",
+			Handler:    _User_SignUpRequest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
