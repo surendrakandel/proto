@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package store;
+option go_package = "github.com/surendrakandel/grpcauth/server/v1/store";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+service Business{
+    rpc CreateStore(CreateStoreRequest) returns(CreateStoreResponse){};
+}
+
+
+message CreateStoreRequest {
+    string business_name = 1;
+    Address business_address = 2;
+    string admin_email = 3;
+}
+
+message CreateStoreResponse {
+    bool success = 1;
+    string business_id = 2;
+}
+message Address {
+    AddressType address_type = 1;
+    string street_1 = 2;
+    string street_2 = 3;
+    string unit_numuber = 4;
+    string zip_code = 5;
+    string city = 6;
+    State state = 7;
+    Country country = 8;
+}
+
+enum AddressType {
+    NONE_ADDRESS_TYPE = 0;
+    Residential = 1;
+    BUSINESS = 2;
+    
+};
+
+enum State{
+    NONE_STATE = 0;
+    CALIFORNIA = 1;
+    TEXAS = 2;
+
+};
+
+enum Country {
+    NONE_COUNTRY = 0;
+    USA = 1;
+    NEPAL = 2;
+};

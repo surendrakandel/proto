@@ -210,12 +210,12 @@
     },
     "/v1/user/sign_up": {
       "post": {
-        "operationId": "User_SignUp",
+        "operationId": "User_SignUpRequest",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/userSignUpResponseData"
             }
           },
           "default": {
@@ -231,7 +231,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userSignUpUser"
+              "$ref": "#/definitions/userSignUpUserData"
             }
           }
         ],
@@ -364,7 +364,7 @@
         "OWNER",
         "ADMIN",
         "STAFF",
-        "Cashier"
+        "CASHIER"
       ],
       "default": "NONE"
     },
@@ -458,7 +458,18 @@
         }
       }
     },
-    "userSignUpUser": {
+    "userSignUpResponseData": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "userSignUpUserData": {
       "type": "object",
       "properties": {
         "firstName": {
@@ -482,8 +493,23 @@
         "email": {
           "type": "string"
         },
-        "role": {
-          "$ref": "#/definitions/userGrant"
+        "businessId": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userGrant"
+          }
+        },
+        "version": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
       }
     },

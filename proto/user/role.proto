@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package user;
-option go_package = "github.com/surendrakandel/proto/codegen/go/user";
+option go_package = "github.com/surendrakandel/grpcauth/server/v1/user";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -49,13 +49,15 @@ service Role {
   // where current user is owner or admin
   rpc GetOwnBusinesses(GetOwnBusinessesRequest) returns (GetOwnBusinessesResponse) {};
 }
+
 enum Grant {
-    NONE = 0;
-    OWNER = 2;
-    ADMIN = 3;
-    STAFF = 4;
-    Cashier = 5;
-}
+  NONE = 0;
+  OWNER = 2;
+  ADMIN = 3;
+  STAFF = 4;
+  CASHIER = 5;
+};
+
 message GetOwnBusinessesRequest {
     string user_id = 1;
     opts.SkipLimit opts = 2;

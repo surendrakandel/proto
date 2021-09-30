@@ -342,7 +342,7 @@
         "OWNER",
         "ADMIN",
         "STAFF",
-        "Cashier"
+        "CASHIER"
       ],
       "default": "NONE"
     },

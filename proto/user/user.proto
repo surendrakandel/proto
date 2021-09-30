@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 package user;
-option go_package = "github.com/surendrakandel/proto/codegen/go/user";
+option go_package = "github.com/surendrakandel/grpcauth/server/v1/user";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -59,13 +59,24 @@ service User {
             body: "*"
         };
     }
-    rpc SignUp(SignUpUser) returns (google.protobuf.Empty){
+    rpc SignUpRequest(SignUpUserData) returns (SignUpResponseData){
         option (google.api.http) = {
             post: "/v1/user/sign_up"
             body: "*"
         };
     }
+  
+  
   }
+  // A custom pattern is used for defining custom HTTP verb.
+message All {
+  // The name of this custom HTTP verb.
+  string kind = 1;
+
+  // The path matched by this custom verb.
+  string path = 2;
+}
+
 message ModifyRightsRequest {
     string user_id = 1;
     google.protobuf.BoolValue ban_review = 2;
@@ -85,7 +96,7 @@ message ModifyRightsRequest {
     string photo_rec = 7;
     bool ban_review = 8;
   }
-  message SignUpUser{
+  message SignUpUserData{
       string first_name = 1;
       string middle_name = 2;
       string last_name = 3;
@@ -93,7 +104,11 @@ message ModifyRightsRequest {
       string password = 5;
       string confirm_password = 6;
       string email = 7;
-      Grant  role = 8; 
+      string business_id = 8;
+      string phone_number = 9;
+      repeated Grant roles = 10; 
+      string version = 11;
+      string id = 12;
 
   }
   message GetByIdRequest {
@@ -134,4 +149,7 @@ message ModifyRightsRequest {
     string photo = 7;
     string photo_rec = 8;
   }
-  
+message SignUpResponseData{
+  string user_id = 1;
+  bool success = 2;
+}
