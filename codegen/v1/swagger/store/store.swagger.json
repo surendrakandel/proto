@@ -77,7 +77,7 @@
       "type": "string",
       "enum": [
         "NONE_ADDRESS_TYPE",
-        "Residential",
+        "RESIDENTIAL",
         "BUSINESS"
       ],
       "default": "NONE_ADDRESS_TYPE"

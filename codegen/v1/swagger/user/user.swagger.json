@@ -208,6 +208,38 @@
         ]
       }
     },
+    "/v1/user/sign_in": {
+      "post": {
+        "operationId": "User_SignInRequest",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userSignInResponseData"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userSignInRequestData"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/v1/user/sign_up": {
       "post": {
         "operationId": "User_SignUpRequest",
@@ -458,6 +490,25 @@
         }
       }
     },
+    "userSignInRequestData": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "userSignInResponseData": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
     "userSignUpResponseData": {
       "type": "object",
       "properties": {
@@ -472,6 +523,9 @@
     "userSignUpUserData": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string"
+        },
         "firstName": {
           "type": "string"
         },
@@ -484,19 +538,13 @@
         "userName": {
           "type": "string"
         },
+        "email": {
+          "type": "string"
+        },
         "password": {
           "type": "string"
         },
         "confirmPassword": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "businessId": {
-          "type": "string"
-        },
-        "phoneNumber": {
           "type": "string"
         },
         "roles": {
@@ -505,10 +553,16 @@
             "$ref": "#/definitions/userGrant"
           }
         },
-        "version": {
+        "phoneNumber": {
           "type": "string"
         },
-        "id": {
+        "businessId": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "version": {
           "type": "string"
         }
       }

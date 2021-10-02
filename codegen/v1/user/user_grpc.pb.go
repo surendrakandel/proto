@@ -29,6 +29,7 @@ type UserClient interface {
 	GetByIds(ctx context.Context, in *GetByIdsRequest, opts ...grpc.CallOption) (*ShortUsers, error)
 	ModifyRights(ctx context.Context, in *ModifyRightsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	SignUpRequest(ctx context.Context, in *SignUpUserData, opts ...grpc.CallOption) (*SignUpResponseData, error)
+	SignInRequest(ctx context.Context, in *SignInRequestData, opts ...grpc.CallOption) (*SignInResponseData, error)
 }
 
 type userClient struct {
@@ -129,6 +130,15 @@ func (c *userClient) SignUpRequest(ctx context.Context, in *SignUpUserData, opts
 	return out, nil
 }
 
+func (c *userClient) SignInRequest(ctx context.Context, in *SignInRequestData, opts ...grpc.CallOption) (*SignInResponseData, error) {
+	out := new(SignInResponseData)
+	err := c.cc.Invoke(ctx, "/user.User/SignInRequest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -143,6 +153,7 @@ type UserServer interface {
 	GetByIds(context.Context, *GetByIdsRequest) (*ShortUsers, error)
 	ModifyRights(context.Context, *ModifyRightsRequest) (*emptypb.Empty, error)
 	SignUpRequest(context.Context, *SignUpUserData) (*SignUpResponseData, error)
+	SignInRequest(context.Context, *SignInRequestData) (*SignInResponseData, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -179,6 +190,9 @@ func (UnimplementedUserServer) ModifyRights(context.Context, *ModifyRightsReques
 }
 func (UnimplementedUserServer) SignUpRequest(context.Context, *SignUpUserData) (*SignUpResponseData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUpRequest not implemented")
+}
+func (UnimplementedUserServer) SignInRequest(context.Context, *SignInRequestData) (*SignInResponseData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignInRequest not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -373,6 +387,24 @@ func _User_SignUpRequest_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_SignInRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignInRequestData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SignInRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.User/SignInRequest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SignInRequest(ctx, req.(*SignInRequestData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -419,6 +451,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignUpRequest",
 			Handler:    _User_SignUpRequest_Handler,
+		},
+		{
+			MethodName: "SignInRequest",
+			Handler:    _User_SignInRequest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package auth;
-option go_package = "github.com/surendrakandel/grpcauth/server/v1/auth";
+option go_package = "github.com/surendrakandel/proto/codegen/go/v1/auth";
 
 
 import "google/protobuf/empty.proto";
@@ -10,7 +10,7 @@ import "google/protobuf/empty.proto";
 
 // AuthenticationService handles auth token verification
 service AuthenticationService {
-  rpc ValidationBearerToken (ValidationBearerTokenRequest) returns (google.protobuf.Empty);
+  rpc ValidationBearerToken (ValidationBearerTokenRequest) returns (TokenValidationResponse);
   rpc DispatchClientCommand (DispatchAuthCommandRequest) returns (google.protobuf.Empty);
   rpc DispatchTokenCommand (DispatchAuthCommandRequest) returns (google.protobuf.Empty);
 }
@@ -24,4 +24,9 @@ message ValidationBearerTokenRequest {
 message DispatchAuthCommandRequest {
   string name = 1;
   bytes payload = 2;
+}
+// token Validation Response
+message TokenValidationResponse{
+  string token = 1;
+  bool success = 2;
 }

@@ -2,12 +2,13 @@
 syntax = "proto3";
 
 package user;
-option go_package = "github.com/surendrakandel/grpcauth/server/v1/user";
+option go_package = "github.com/surendrakandel/proto/codegen/go/v1/user";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "user/role.proto";
+import "validate/validate.proto";
 
 service User {
     rpc GoogleAuth(GoogleAuthRequest) returns (SelfUser) {
@@ -65,6 +66,12 @@ service User {
             body: "*"
         };
     }
+    rpc SignInRequest(SignInRequestData) returns (SignInResponseData){
+      option (google.api.http) = {
+          post: "/v1/user/sign_in"
+          body: "*"
+      };
+  }
   
   
   }
@@ -82,64 +89,50 @@ message ModifyRightsRequest {
     google.protobuf.BoolValue ban_review = 2;
   }
   
-  message ShortUsers {
-    repeated ShortUser users = 1;
-  }
-  
-  message ShortUser {
-    string id = 1;
-    uint32 tt_id = 2;
-    string first_name = 3;
-    string middle_name = 4;
-    string last_name = 5;
-    string photo = 6;
-    string photo_rec = 7;
-    bool ban_review = 8;
-  }
-  message SignUpUserData{
-      string first_name = 1;
-      string middle_name = 2;
-      string last_name = 3;
-      string user_name = 4;
-      string password = 5;
-      string confirm_password = 6;
-      string email = 7;
-      string business_id = 8;
-      string phone_number = 9;
-      repeated Grant roles = 10; 
-      string version = 11;
-      string id = 12;
+message ShortUsers {
+  repeated ShortUser users = 1;
+}
 
-  }
-  message GetByIdRequest {
-    string user_id = 1;
-  }
+message ShortUser {
+  string id = 1;
+  uint32 tt_id = 2;
+  string first_name = 3;
+  string middle_name = 4;
+  string last_name = 5;
+  string photo = 6;
+  string photo_rec = 7;
+  bool ban_review = 8;
+}
+
+message GetByIdRequest {
+  string user_id = 1;
+}
+
+message GetByIdsRequest {
+  repeated string user_ids = 1;
+}
+
+message AuthRequest {
+  string token = 1;
+}
+message MicrosoftAuthRequest {
+  string code = 1;
+}
+message YahooAuthRequest {
+  string code = 1;
+}
+message FacebookAuthRequest {
+  string code = 1;
+}
+message AppleAuthRequest {
+  string code = 1;
+}
+
+message GoogleAuthRequest {
+  string code = 1;
+}
   
-  message GetByIdsRequest {
-    repeated string user_ids = 1;
-  }
-  
-  message AuthRequest {
-    string token = 1;
-  }
-  message MicrosoftAuthRequest {
-    string code = 1;
-  }
-  message YahooAuthRequest {
-    string code = 1;
-  }
-  message FacebookAuthRequest {
-    string code = 1;
-  }
-  message AppleAuthRequest {
-    string code = 1;
-  }
-  
-  message GoogleAuthRequest {
-    string code = 1;
-  }
-  
-  message SelfUser {
+message SelfUser {
     string id = 1;
     uint32 vk_id = 2;
     string token = 3;
@@ -148,7 +141,49 @@ message ModifyRightsRequest {
     string last_name = 6;
     string photo = 7;
     string photo_rec = 8;
-  }
+}
+message SignUpUserData{
+  string id = 1;
+  string first_name = 2;
+  string middle_name = 3;
+  string last_name = 4;
+  string user_name = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
+  string password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string confirm_password = 8 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  repeated Grant roles = 9 [(validate.rules).any.required = true]; 
+  string phone_number = 10;
+  repeated string business_id = 11;
+  string version = 12;
+    
+}
+
+message UserAccount{
+  string id = 1;
+  string first_name = 2;
+  string middle_name = 3;
+  string last_name = 4;
+  string user_name = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
+  string password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  repeated Grant roles = 8 [(validate.rules).any.required = true]; 
+  string phone_number = 9;
+  repeated string business_id = 10;
+  string created_at = 11;
+  string updated_at = 12;
+  string last_login_at = 13;
+  string deleted_at = 14;
+  string version = 15;
+}
+message SignInRequestData{
+  string email = 1 [(validate.rules).string.email = true];
+  string password = 2 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+
+}
+message SignInResponseData{
+  string token= 1;
+  
+}
 message SignUpResponseData{
   string user_id = 1;
   bool success = 2;

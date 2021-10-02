@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package user;
-option go_package = "github.com/surendrakandel/grpcauth/server/v1/user";
+option go_package = "github.com/surendrakandel/proto/codegen/go/v1/user";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";

@@ -3,6 +3,7 @@ name: buf.build/surendrakandel/myrepo
 deps:
   - buf.build/googleapis/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
+  - buf.build/beta/protoc-gen-validate
  
 build:
   roots:

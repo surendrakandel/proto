@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package store;
-option go_package = "github.com/surendrakandel/grpcauth/server/v1/store";
+option go_package = "github.com/surendrakandel/proto/codegen/go/v1/store";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
 service Business{
@@ -32,7 +32,7 @@ message Address {
 
 enum AddressType {
     NONE_ADDRESS_TYPE = 0;
-    Residential = 1;
+    RESIDENTIAL = 1;
     BUSINESS = 2;
     
 };

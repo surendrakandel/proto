@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthenticationServiceClient interface {
-	ValidationBearerToken(ctx context.Context, in *ValidationBearerTokenRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ValidationBearerToken(ctx context.Context, in *ValidationBearerTokenRequest, opts ...grpc.CallOption) (*TokenValidationResponse, error)
 	DispatchClientCommand(ctx context.Context, in *DispatchAuthCommandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DispatchTokenCommand(ctx context.Context, in *DispatchAuthCommandRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -32,8 +32,8 @@ func NewAuthenticationServiceClient(cc grpc.ClientConnInterface) AuthenticationS
 	return &authenticationServiceClient{cc}
 }
 
-func (c *authenticationServiceClient) ValidationBearerToken(ctx context.Context, in *ValidationBearerTokenRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *authenticationServiceClient) ValidationBearerToken(ctx context.Context, in *ValidationBearerTokenRequest, opts ...grpc.CallOption) (*TokenValidationResponse, error) {
+	out := new(TokenValidationResponse)
 	err := c.cc.Invoke(ctx, "/auth.AuthenticationService/ValidationBearerToken", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (c *authenticationServiceClient) DispatchTokenCommand(ctx context.Context, 
 // All implementations must embed UnimplementedAuthenticationServiceServer
 // for forward compatibility
 type AuthenticationServiceServer interface {
-	ValidationBearerToken(context.Context, *ValidationBearerTokenRequest) (*emptypb.Empty, error)
+	ValidationBearerToken(context.Context, *ValidationBearerTokenRequest) (*TokenValidationResponse, error)
 	DispatchClientCommand(context.Context, *DispatchAuthCommandRequest) (*emptypb.Empty, error)
 	DispatchTokenCommand(context.Context, *DispatchAuthCommandRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAuthenticationServiceServer()
@@ -73,7 +73,7 @@ type AuthenticationServiceServer interface {
 type UnimplementedAuthenticationServiceServer struct {
 }
 
-func (UnimplementedAuthenticationServiceServer) ValidationBearerToken(context.Context, *ValidationBearerTokenRequest) (*emptypb.Empty, error) {
+func (UnimplementedAuthenticationServiceServer) ValidationBearerToken(context.Context, *ValidationBearerTokenRequest) (*TokenValidationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidationBearerToken not implemented")
 }
 func (UnimplementedAuthenticationServiceServer) DispatchClientCommand(context.Context, *DispatchAuthCommandRequest) (*emptypb.Empty, error) {

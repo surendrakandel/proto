@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "authentication/authentication.proto",
+    "title": "auth/authentication.proto",
     "version": "version not set"
   },
   "tags": [
@@ -17,6 +17,18 @@
   ],
   "paths": {},
   "definitions": {
+    "authTokenValidationResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "token Validation Response"
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
