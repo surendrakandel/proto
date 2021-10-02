@@ -1191,7 +1191,15 @@ func (m *UserAccount) Validate() error {
 
 	// no validation rules for PhoneNumber
 
-	// no validation rules for CreatedAt
+	if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserAccountValidationError{
+				field:  "CreatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for UpdatedAt
 

@@ -7,6 +7,7 @@ option go_package = "github.com/surendrakandel/proto/codegen/go/v1/user";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
 import "user/role.proto";
 import "validate/validate.proto";
 
@@ -169,7 +170,7 @@ message UserAccount{
   repeated Grant roles = 8 [(validate.rules).any.required = true]; 
   string phone_number = 9;
   repeated string business_id = 10;
-  string created_at = 11;
+  google.protobuf.Timestamp  created_at = 11;
   string updated_at = 12;
   string last_login_at = 13;
   string deleted_at = 14;

@@ -7,7 +7,7 @@
 package user
 
 import (
-	opts "github.com/surendrakandel/proto/codegen/v1/opts"
+	opts "github.com/surendrakandel/proto/codegen/go/v1/opts"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
