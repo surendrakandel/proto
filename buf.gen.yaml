@@ -1,24 +1,24 @@
 version: v1
 plugins:
   - name: go
-    out: /Users/surendrakandel/finalproject/proto/codegen/v1
+    out: /Users/surendrakandel/finalproject/proto/codegen/go/v1
     opt:
       - paths=source_relative
   - name: go-grpc
-    out: /Users/surendrakandel/finalproject/proto/codegen/v1
+    out: /Users/surendrakandel/finalproject/proto/codegen/go/v1
     opt:
       - paths=source_relative
   - name: grpc-gateway
-    out: /Users/surendrakandel/finalproject/proto/codegen/v1
+    out: /Users/surendrakandel/finalproject/proto/codegen/go/v1
     opt:
       - paths=source_relative
       - generate_unbound_methods=true
   - name: openapiv2
-    out: /Users/surendrakandel/finalproject/proto/codegen/v1/swagger
+    out: /Users/surendrakandel/finalproject/proto/codegen/go/v1/swagger
     opt:
       - logtostderr=true
   - name: "validate"
-    out: /Users/surendrakandel/finalproject/proto/codegen/v1
+    out: /Users/surendrakandel/finalproject/proto/codegen/go/v1
     opt: paths=source_relative,lang=go 
 
   #- name: govalidators

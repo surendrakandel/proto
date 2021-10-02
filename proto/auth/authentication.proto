@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package auth;
-option go_package = "github.com/surendrakandel/proto/codegen/go/v1/auth";
+option go_package = "github.com/surendrakandel/proto/codegen/v1/auth";
 
 
 import "google/protobuf/empty.proto";
