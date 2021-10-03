@@ -152,7 +152,7 @@ message SignUpUserData{
   string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
   string password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
   string confirm_password = 8 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
-  repeated Grant roles = 9 [(validate.rules).any.required = true]; 
+  repeated int32 roles = 9 [(validate.rules).repeated = {min_items: 5, max_items: 5,ignore_empty: true, items: {int32: {gte: 0, lt:5}}}]; 
   string phone_number = 10;
   repeated string business_id = 11;
   string version = 12;
@@ -167,13 +167,13 @@ message UserAccount{
   string user_name = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
   string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
   string password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
-  repeated Grant roles = 8 [(validate.rules).any.required = true]; 
+  repeated int32 roles = 8 [(validate.rules).repeated = {min_items: 5, max_items: 7,ignore_empty: true, items: {int32: {gte: 0, lt:5}}}];  
   string phone_number = 9;
   repeated string business_id = 10;
   google.protobuf.Timestamp  created_at = 11;
-  string updated_at = 12;
-  string last_login_at = 13;
-  string deleted_at = 14;
+  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp last_login_at = 13;
+  google.protobuf.Timestamp deleted_at = 14;
   string version = 15;
 }
 message SignInRequestData{

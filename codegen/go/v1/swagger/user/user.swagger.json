@@ -389,17 +389,6 @@
         }
       }
     },
-    "userGrant": {
-      "type": "string",
-      "enum": [
-        "NONE",
-        "OWNER",
-        "ADMIN",
-        "STAFF",
-        "CASHIER"
-      ],
-      "default": "NONE"
-    },
     "userMicrosoftAuthRequest": {
       "type": "object",
       "properties": {
@@ -550,7 +539,8 @@
         "roles": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/userGrant"
+            "type": "integer",
+            "format": "int32"
           }
         },
         "phoneNumber": {

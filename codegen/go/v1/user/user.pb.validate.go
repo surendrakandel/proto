@@ -1011,14 +1011,26 @@ func (m *SignUpUserData) Validate() error {
 		}
 	}
 
-	if m.GetRoles() == nil {
-		return SignUpUserDataValidationError{
-			field:  "Roles",
-			reason: "value is required",
-		}
-	}
+	if len(m.GetRoles()) > 0 {
 
-	if a := m.GetRoles(); a != nil {
+		if len(m.GetRoles()) != 5 {
+			return SignUpUserDataValidationError{
+				field:  "Roles",
+				reason: "value must contain exactly 5 item(s)",
+			}
+		}
+
+		for idx, item := range m.GetRoles() {
+			_, _ = idx, item
+
+			if val := item; val < 0 || val >= 5 {
+				return SignUpUserDataValidationError{
+					field:  fmt.Sprintf("Roles[%v]", idx),
+					reason: "value must be inside range [0, 5)",
+				}
+			}
+
+		}
 
 	}
 
@@ -1178,14 +1190,26 @@ func (m *UserAccount) Validate() error {
 		}
 	}
 
-	if m.GetRoles() == nil {
-		return UserAccountValidationError{
-			field:  "Roles",
-			reason: "value is required",
-		}
-	}
+	if len(m.GetRoles()) > 0 {
 
-	if a := m.GetRoles(); a != nil {
+		if l := len(m.GetRoles()); l < 5 || l > 7 {
+			return UserAccountValidationError{
+				field:  "Roles",
+				reason: "value must contain between 5 and 7 items, inclusive",
+			}
+		}
+
+		for idx, item := range m.GetRoles() {
+			_, _ = idx, item
+
+			if val := item; val < 0 || val >= 5 {
+				return UserAccountValidationError{
+					field:  fmt.Sprintf("Roles[%v]", idx),
+					reason: "value must be inside range [0, 5)",
+				}
+			}
+
+		}
 
 	}
 
@@ -1201,11 +1225,35 @@ func (m *UserAccount) Validate() error {
 		}
 	}
 
-	// no validation rules for UpdatedAt
+	if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserAccountValidationError{
+				field:  "UpdatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for LastLoginAt
+	if v, ok := interface{}(m.GetLastLoginAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserAccountValidationError{
+				field:  "LastLoginAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for DeletedAt
+	if v, ok := interface{}(m.GetDeletedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UserAccountValidationError{
+				field:  "DeletedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for Version
 
