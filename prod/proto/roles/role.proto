@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package roles;
+
+
+option go_package = "github.com/surendrakandel/grpcauth/api/grpcservice/v1/roles";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "validate/validate.proto";
+service Role {
+    // create request to apply current user as Business owner. Business can have only one owner
+  rpc GetRole(GetRoleOfId) returns (Grant){
+    option (google.api.http) = {
+        post: "/v1/role/get_role"
+        body:"*"
+        
+  };
+  }
+  
+}
+
+message Grant {
+    repeated string roles = 1 [(validate.rules).repeated = {min_items: 5, max_items: 5,ignore_empty: false items: {string: {in: ["NONE", "STAFF", "CASHIER", "MANAGER", "ADMIN", "OWNER"]}}}];
+};
+  
+
+message GetRoleOfId {
+    string id = 1;
+}

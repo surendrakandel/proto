@@ -1,0 +1,29 @@
+{
+    "folders": [
+		{
+			"path": "../../../grpcauth"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../strings"
+		},
+		{
+			"path": "../../../../natsstock/natsstockproj"
+		}
+	],
+    "settings": {
+        "sqltools.connections": [{
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "local:market",
+            "database": "market",
+            "username": "surendrakandel",
+            "password": "postgres"
+        }]
+    },
+
+}

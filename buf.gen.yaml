@@ -1,5 +1,10 @@
 version: v1
 plugins:
+  - name: dart
+    out: /Users/surendrakandel/finalproject/proto/codegen/dart/v1
+    opt:
+      - paths=source_relative
+  
   - name: go
     out: /Users/surendrakandel/finalproject/proto/codegen/go/v1
     opt:

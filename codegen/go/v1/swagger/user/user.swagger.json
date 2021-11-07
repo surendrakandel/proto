@@ -16,110 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/v1/user/apple_auth": {
-      "post": {
-        "operationId": "User_AppleAuth",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userSelfUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userAppleAuthRequest"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/v1/user/facebook_auth": {
-      "post": {
-        "operationId": "User_FacebookAuth",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userSelfUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userFacebookAuthRequest"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/v1/user/google_auth": {
-      "post": {
-        "operationId": "User_GoogleAuth",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userSelfUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userGoogleAuthRequest"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/v1/user/id": {
+    "/hi": {
       "get": {
-        "operationId": "User_GetById",
+        "operationId": "User_SayHello",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userShortUser"
+              "$ref": "#/definitions/userSayHi"
             }
           },
           "default": {
@@ -129,80 +33,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/v1/user/ids": {
-      "get": {
-        "operationId": "User_GetByIds",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userShortUsers"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "userIds",
-            "in": "query",
-            "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/v1/user/microsoft_auth": {
-      "post": {
-        "operationId": "User_MicrosoftAuth",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userSelfUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userMicrosoftAuthRequest"
-            }
-          }
-        ],
         "tags": [
           "User"
         ]
@@ -271,70 +101,6 @@
           "User"
         ]
       }
-    },
-    "/v1/user/update_rights": {
-      "post": {
-        "operationId": "User_ModifyRights",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userModifyRightsRequest"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/v1/user/yahoo_auth": {
-      "post": {
-        "operationId": "User_YahooAuth",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userSelfUser"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userYahooAuthRequest"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
     }
   },
   "definitions": {
@@ -346,6 +112,17 @@
         }
       },
       "additionalProperties": {}
+    },
+    "rolesGrant": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "rpcStatus": {
       "type": "object",
@@ -365,117 +142,14 @@
         }
       }
     },
-    "userAppleAuthRequest": {
+    "userSayHi": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "string"
-        }
-      }
-    },
-    "userFacebookAuthRequest": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string"
-        }
-      }
-    },
-    "userGoogleAuthRequest": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string"
-        }
-      }
-    },
-    "userMicrosoftAuthRequest": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string"
-        }
-      }
-    },
-    "userModifyRightsRequest": {
-      "type": "object",
-      "properties": {
-        "userId": {
+        "hello": {
           "type": "string"
         },
-        "banReview": {
+        "success": {
           "type": "boolean"
-        }
-      }
-    },
-    "userSelfUser": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "vkId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "token": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "middleName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "photo": {
-          "type": "string"
-        },
-        "photoRec": {
-          "type": "string"
-        }
-      }
-    },
-    "userShortUser": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "ttId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "middleName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "photo": {
-          "type": "string"
-        },
-        "photoRec": {
-          "type": "string"
-        },
-        "banReview": {
-          "type": "boolean"
-        }
-      }
-    },
-    "userShortUsers": {
-      "type": "object",
-      "properties": {
-        "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/userShortUser"
-          }
         }
       }
     },
@@ -537,30 +211,9 @@
           "type": "string"
         },
         "roles": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          }
+          "$ref": "#/definitions/rolesGrant"
         },
         "phoneNumber": {
-          "type": "string"
-        },
-        "businessId": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "version": {
-          "type": "string"
-        }
-      }
-    },
-    "userYahooAuthRequest": {
-      "type": "object",
-      "properties": {
-        "code": {
           "type": "string"
         }
       }

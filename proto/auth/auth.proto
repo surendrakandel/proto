@@ -1,0 +1,63 @@
+// protoc --go_out=plugins=grpc:. *.proto
+syntax = "proto3";
+
+package auth;
+// option go_package = "github.com/surendrakandel/proto/codegen/go/v1/user";
+option go_package = "github.com/surendrakandel/grpcauth/api/v1/user";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "roles/role.proto";
+
+service Auth {
+    rpc GrantRequest(GrantRequestData) returns(GrantResponseData){
+        option (google.api.http) = {
+            get: "/v1/user/auth"
+            
+        };
+    }
+    rpc RevokeGrant(EventRevokeData) returns(google.protobuf.Empty){
+
+    }
+}
+
+message GenericAuth {
+    string msg = 1;
+}
+message Event{
+    string msg_type_url = 1;
+    string granter = 2;
+    string grantee = 3;
+}
+message EventRevokeData{
+    string msg_type_url = 1;
+    string granter = 2;
+    string grantee = 3;
+}
+message GrantAuthorization{
+    string granter = 1;
+    string grantee = 2;
+    string authorization =3;
+    string expiration = 4;
+    string kid = 5;
+}
+message TodayAuth {
+    GrantAuthorization authorization = 1;
+}
+message Grant {
+    google.protobuf.Any  authorization = 1;
+    google.protobuf.Timestamp	expiration = 2;
+}
+message GrantRequestData{
+    string granter = 1;
+    string gratee = 2;
+    string msg_type_url = 3;
+    
+}
+message GrantResponseData{
+    Grant grants = 1;
+
+}

@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "user/role.proto",
+    "title": "business/business.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "Role"
+      "name": "Business"
     }
   ],
   "consumes": [
@@ -19,7 +19,7 @@
     "/v1/role/addBusinessAdmin": {
       "post": {
         "summary": "only owner can set admins (up to 50)",
-        "operationId": "Role_AddBusinessAdmin",
+        "operationId": "Business_AddBusinessAdmin",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -40,24 +40,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userAddBusinessAdminRequest"
+              "$ref": "#/definitions/businessAddBusinessAdminRequest"
             }
           }
         ],
         "tags": [
-          "Role"
+          "Business"
         ]
       }
     },
     "/v1/role/applyBusinessOwner": {
       "post": {
-        "summary": "create request to apply current user as Business owner. Business can have only one owner",
-        "operationId": "Role_ApplyBusinessOwner",
+        "operationId": "Business_ApplyBusinessOwner",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userApplyBusinessOwnerResponse"
+              "$ref": "#/definitions/businessApplyBusinessOwnerResponse"
             }
           },
           "default": {
@@ -73,23 +72,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userApplyBusinessOwnerRequest"
+              "$ref": "#/definitions/businessApplyBusinessOwnerRequest"
             }
           }
         ],
         "tags": [
-          "Role"
+          "Business"
         ]
       }
     },
     "/v1/role/getManagers": {
       "get": {
-        "operationId": "Role_GetManagers",
+        "operationId": "Business_GetManagers",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userGetManagersResponse"
+              "$ref": "#/definitions/businessGetManagersResponse"
             }
           },
           "default": {
@@ -123,13 +122,13 @@
           }
         ],
         "tags": [
-          "Role"
+          "Business"
         ]
       }
     },
     "/v1/role/removeBusinessAdmin": {
       "delete": {
-        "operationId": "Role_RemoveBusinessAdmin",
+        "operationId": "Business_RemoveBusinessAdmin",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -159,14 +158,14 @@
           }
         ],
         "tags": [
-          "Role"
+          "Business"
         ]
       }
     },
     "/v1/role/setCompanyOwner": {
       "post": {
         "summary": "company owner can move self owner-role to another user. this action is irreversible",
-        "operationId": "Role_SetCompanyOwner",
+        "operationId": "Business_SetCompanyOwner",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -187,18 +186,18 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userSetBusinessOwnerRequest"
+              "$ref": "#/definitions/businessSetBusinessOwnerRequest"
             }
           }
         ],
         "tags": [
-          "Role"
+          "Business"
         ]
       }
     },
     "/v1/role/verifyBusinesOwner": {
       "post": {
-        "operationId": "Role_VerifyBusinessOwner",
+        "operationId": "Business_VerifyBusinessOwner",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -219,17 +218,118 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userVerifyBusinessOwnerRequest"
+              "$ref": "#/definitions/businessVerifyBusinessOwnerRequest"
             }
           }
         ],
         "tags": [
-          "Role"
+          "Business"
         ]
       }
     }
   },
   "definitions": {
+    "businessAddBusinessAdminRequest": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "businessApplyBusinessOwnerRequest": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string"
+        }
+      },
+      "title": "example.com"
+    },
+    "businessApplyBusinessOwnerResponse": {
+      "type": "object",
+      "properties": {
+        "metaName": {
+          "type": "string"
+        },
+        "metaContent": {
+          "type": "string"
+        }
+      }
+    },
+    "businessCanEditBusinessResponse": {
+      "type": "object",
+      "properties": {
+        "canEdit": {
+          "type": "boolean"
+        }
+      }
+    },
+    "businessGetManagersResponse": {
+      "type": "object",
+      "properties": {
+        "managers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/businessManagerItem"
+          }
+        }
+      }
+    },
+    "businessGetOwnBusinessesResponse": {
+      "type": "object",
+      "properties": {
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "businessManagerItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "midddleName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "photo": {
+          "type": "string"
+        }
+      }
+    },
+    "businessSetBusinessOwnerRequest": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "businessVerifyBusinessOwnerRequest": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string"
+        }
+      },
+      "title": "example.com"
+    },
     "optsSkipLimit": {
       "type": "object",
       "properties": {
@@ -273,121 +373,6 @@
           }
         }
       }
-    },
-    "userAddBusinessAdminRequest": {
-      "type": "object",
-      "properties": {
-        "businessId": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "string"
-        }
-      }
-    },
-    "userApplyBusinessOwnerRequest": {
-      "type": "object",
-      "properties": {
-        "businessId": {
-          "type": "string"
-        }
-      },
-      "title": "example.com"
-    },
-    "userApplyBusinessOwnerResponse": {
-      "type": "object",
-      "properties": {
-        "metaName": {
-          "type": "string"
-        },
-        "metaContent": {
-          "type": "string"
-        }
-      }
-    },
-    "userCanEditBusinessResponse": {
-      "type": "object",
-      "properties": {
-        "canEdit": {
-          "type": "boolean"
-        }
-      }
-    },
-    "userGetManagersResponse": {
-      "type": "object",
-      "properties": {
-        "managers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/userManagerItem"
-          }
-        }
-      }
-    },
-    "userGetOwnBusinessesResponse": {
-      "type": "object",
-      "properties": {
-        "businessIds": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "userGrant": {
-      "type": "string",
-      "enum": [
-        "NONE",
-        "OWNER",
-        "ADMIN",
-        "STAFF",
-        "CASHIER"
-      ],
-      "default": "NONE"
-    },
-    "userManagerItem": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "midddleName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "photo": {
-          "type": "string"
-        },
-        "grant": {
-          "$ref": "#/definitions/userGrant"
-        }
-      }
-    },
-    "userSetBusinessOwnerRequest": {
-      "type": "object",
-      "properties": {
-        "businessId": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "string"
-        }
-      }
-    },
-    "userVerifyBusinessOwnerRequest": {
-      "type": "object",
-      "properties": {
-        "businessId": {
-          "type": "string"
-        }
-      },
-      "title": "example.com"
     }
   }
 }

@@ -1,0 +1,135 @@
+// protoc --go_out=plugins=grpc:. *.proto
+syntax = "proto3";
+
+package storeuser;
+option go_package = "github.com/surendrakandel/grpcauth/api/grpcservice/v1/storeuser";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "roles/role.proto";
+
+
+service StoreUser {
+  rpc SignUp(SignUpUserData) returns (SignUpResponseData){
+      option (google.api.http) = {
+          post: "/v1/user/sign_up"
+          body: "*"
+    };
+  }
+  rpc SignIn(SignInData) returns (SignInResponseData){
+    option (google.api.http) = {
+        post: "/v1/user/sign_in"
+        body: "*"
+    };
+  };
+  rpc UpdateUser(UpdateUserData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        patch: "/v1/user/update_user"
+        body: "*"
+    };
+  };
+  rpc UpdateRoles(UpdateRolesData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        patch: "/v1/user/update_roles"
+        body: "*"
+    };
+  };
+  rpc ResetRoles(UpdateRolesData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        patch: "/v1/user/reset_roles"
+        body: "*"
+    };
+  };
+  rpc ForgotPassword(ForgetPasswordData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        post: "/v1/user/update_password"
+        body: "*"
+    };
+  };
+  rpc ResetPassword(ResetPinData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        patch: "/v1/user/reset_password"
+        body: "*"
+    };
+  };
+  rpc DeleteUser(DeleteUserData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        delete: "/v1/user/delete"
+        
+    };
+  };
+ 
+} 
+
+
+message ResetPinData{
+  string token =1;
+  string pin = 2;
+  string old_pin = 3;
+}
+message ForgetPasswordData {
+  string email = 1;
+}
+message UpdateRolesData {
+  string token = 1;
+  string updater_id = 2;
+  repeated string updater_roles = 3;
+  string updatee_id = 4;
+  repeated string updatee_roles = 5;
+}
+message GeneralSuccess {
+  bool success = 1;
+  string message = 2;
+}
+
+message SignUpUserData{
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string hashed_pin = 4 [(validate.rules).any.required = true,(validate.rules).string.min_len = 4];
+  string approver_id = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];
+  string confirm_hashed_pin = 6 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  repeated string roles = 9 [(validate.rules).repeated = {min_items: 5, max_items: 5,ignore_empty: false items: {string: {in: ["NONE", "STAFF", "CASHIER", "MANAGER", "ADMIN", "OWNER"]}}}];
+}
+message DeleteUserData{
+  string token = 1;
+  string email = 2;
+  string password = 3;
+  string user_name = 4;
+}
+message UpdateUserData{
+  string token = 1;
+  string first_name = 2;
+  string last_name = 4;
+  string user_id = 5;
+  google.protobuf.Timestamp updated_at = 8;
+  google.protobuf.Timestamp deleted_at = 9;
+}
+
+message UserData{
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string user_id = 4 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string pin = 5;
+  google.protobuf.Timestamp  created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp last_login_at = 8;
+  google.protobuf.Timestamp deleted_at = 9;
+}
+message SignInData{
+  string store_id = 1[(validate.rules).any.required = true,(validate.rules).string.min_len = 5];
+  string user_id = 2 [(validate.rules).string.email = true,(validate.rules).string.min_len  = 5];
+  string pin = 3 [(validate.rules).any.required = true,(validate.rules).string.min_len = 4];
+
+}
+message SignInResponseData{
+  string token= 1;
+  
+}
+message SignUpResponseData{
+  string user_id = 1;
+  bool success = 2;
+}

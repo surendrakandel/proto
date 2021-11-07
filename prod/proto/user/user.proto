@@ -2,8 +2,7 @@
 syntax = "proto3";
 
 package user;
-// option go_package = "github.com/surendrakandel/proto/codegen/go/v1/user";
-option go_package = "github.com/surendrakandel/grpcauth/api/v1/user";
+option go_package = "github.com/surendrakandel/grpcauth/api/grpcservice/v1/user";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
@@ -12,57 +11,64 @@ import "validate/validate.proto";
 import "roles/role.proto";
 
 
-
 service User {
-  rpc SignUpRequest(SignUpData) returns (SignUpResponseData){
+  rpc SignUp(SignUpData) returns (SignUpResponseData){
       option (google.api.http) = {
           post: "/v1/user/sign_up"
           body: "*"
     };
   }
-  rpc SignInRequest(SignInData) returns (SignInResponseData){
+  rpc SignIn(SignInData) returns (SignInResponseData){
     option (google.api.http) = {
         post: "/v1/user/sign_in"
         body: "*"
     };
   };
-  rpc UpdateUserRequest(UserUpdateData) returns (GeneralSuccess){
+  rpc UpdateUser(UpdateUserData) returns (GeneralSuccess){
     option (google.api.http) = {
-        post: "/v1/user/update_user"
+        patch: "/v1/user/update_user"
         body: "*"
     };
   };
-  rpc UpdateRolesRequest(UpdateRolesData) returns (GeneralSuccess){
+  rpc UpdateRoles(UpdateRolesData) returns (GeneralSuccess){
     option (google.api.http) = {
         patch: "/v1/user/update_roles"
         body: "*"
     };
   };
-  rpc ResetRolesRequest(UpdateRolesData) returns (GeneralSuccess){
+  rpc ResetRoles(UpdateRolesData) returns (GeneralSuccess){
     option (google.api.http) = {
-        post: "/v1/user/update_roles"
+        patch: "/v1/user/reset_roles"
         body: "*"
     };
   };
-  rpc ForgotPasswordRequest(ForgetPasswordData) returns (GeneralSuccess){
+  rpc ForgotPassword(ForgetPasswordData) returns (GeneralSuccess){
     option (google.api.http) = {
-        post: "/v1/user/update_roles"
+        post: "/v1/user/update_password"
         body: "*"
     };
   };
-  rpc ResetPasswordRequest(ResetPasswordData) returns (GeneralSuccess){
+  rpc ResetPassword(ResetPasswordData) returns (GeneralSuccess){
     option (google.api.http) = {
-        post: "/v1/user/update_roles"
+        patch: "/v1/user/reset_password"
         body: "*"
     };
   };
-  rpc PasswordResetLinkRequest(ResetPasswordLink) returns (GeneralSuccess){
+  rpc PasswordResetLink(ResetPasswordLink) returns (GeneralSuccess){
     option (google.api.http) = {
-        post: "/v1/user/update_roles"
+        post: "/v1/user/reset_link"
         body: "*"
     };
   };
-}
+  rpc DeleteUser(DeleteUserData) returns (GeneralSuccess){
+    option (google.api.http) = {
+        delete: "/v1/user/delete"
+        
+    };
+  };
+ 
+} 
+
 message ResetPasswordLink {
   string email = 1;
 }
@@ -83,9 +89,11 @@ message UpdateRolesData {
   string updatee_id = 5;
   string updatee_email = 6;
   repeated string updatee_roles = 7;
- 
 }
-
+message GeneralSuccess {
+  bool success = 1;
+  string message = 2;
+}
 
 message SignUpData{
   string id = 1;
@@ -94,16 +102,29 @@ message SignUpData{
   string last_name = 4;
   string user_name = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
   string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
-  string password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
-  string confirm_password = 8 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string hashed_password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string confirm_hashed_password = 8 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
   repeated string roles = 9 [(validate.rules).repeated = {min_items: 5, max_items: 5,ignore_empty: false items: {string: {in: ["NONE", "STAFF", "CASHIER", "MANAGER", "ADMIN", "OWNER"]}}}];
   string phone_number = 10;
+  google.protobuf.Timestamp deleted_at = 11;
 
-    
 }
-message GeneralSuccess {
-  bool success = 1;
-  string message = 2;
+message DeleteUserData{
+  string token = 1;
+  string email = 2;
+  string password = 3;
+  string user_name = 4;
+}
+message UpdateUserData{
+  string token = 1;
+  string first_name = 2;
+  string middle_name = 3;
+  string last_name = 4;
+  string user_name = 5;
+  string email = 6;
+  string phone_number = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  google.protobuf.Timestamp deleted_at = 9;
 }
 
 message UserAccount{
@@ -113,28 +134,16 @@ message UserAccount{
   string last_name = 4;
   string user_name = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
   string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
-  string password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
-  roles.Grant roles = 8;  
+  string hashed_password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
   string phone_number = 9;
   google.protobuf.Timestamp  created_at = 11;
   google.protobuf.Timestamp updated_at = 12;
   google.protobuf.Timestamp last_login_at = 13;
   google.protobuf.Timestamp deleted_at = 14;
 }
-message UserUpdateData{
-  string token = 1;
-  string first_name = 2;
-  string middle_name = 3;
-  string last_name = 4;
-  string user_name = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
-  string email = 6 [(validate.rules).string.min_len = 10,(validate.rules).string.email = true];
-  string hashed_password = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
-  roles.Grant roles = 8;  
-  string phone_number = 9;
-}
 message SignInData{
   string email = 1 [(validate.rules).string.email = true];
-  string password = 2 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
+  string hashed_password = 2 [(validate.rules).any.required = true,(validate.rules).string.min_len = 8];
 
 }
 message SignInResponseData{

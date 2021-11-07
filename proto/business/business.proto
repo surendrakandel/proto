@@ -1,0 +1,152 @@
+syntax = "proto3";
+
+package business;
+option go_package = "github.com/surendrakandel/grpcauth/api/grpcservice/v1/business";
+
+
+service Business{
+  rpc CreateBusiness(CreateBusinessData) returns (CreateBusinessResponse);
+  rpc UpdateBusiness(UpdateBusinessData) returns (GeneralSuccess);
+  rpc DeleteBusiness(DeleteBusinessData) returns (GeneralSuccess);
+  rpc ApplyBusinessOwner(ApplyBusinessOwnerRequest) returns (ApplyBusinessOwnerResponse);
+  rpc VerifyBusinessOwner(VerifyBusinessOwnerRequest) returns (GeneralSuccess);
+  // only owner can set admins (up to 50)
+  rpc AddBusinessAdmin(AddBusinessAdminRequest) returns (GeneralSuccess);
+  rpc RemoveBusinessAdmin(RemoveBusinessAdminRequest) returns (GeneralSuccess);
+  // company owner can move self owner-role to another user. this action is irreversible
+  rpc SetCompanyOwner(SetBusinessOwnerRequest) returns (GeneralSuccess);
+  rpc GetManagers(GetManagersRequest) returns (GetManagersResponse);
+  rpc CanEditBusiness(CanEditBusinessRequest) returns (CanEditBusinessResponse);// where current user is owner or admin
+  rpc GetOwnBusinesses(GetOwnBusinessesRequest) returns (GetOwnBusinessesResponse);
+}
+message GetOwnBusinessesRequest {
+    string user_id = 1;
+    
+   
+}
+  
+message GetOwnBusinessesResponse {
+    repeated string business_ids = 1;
+}
+  
+message GetManagersRequest {cd
+    string business_id = 1;
+   
+    
+}
+
+message ManagerItem {
+    string id = 1;
+    string first_name = 2;
+    string midddle_name= 3;
+    string last_name = 4;
+    string photo = 5;
+   
+}
+  
+message GetManagersResponse {
+    repeated ManagerItem managers = 1;
+}
+  
+message CanEditBusinessRequest {
+    string business_id = 1;
+    string user_id = 2;
+}
+
+message CanEditBusinessResponse {
+    bool can_edit = 1;
+}
+
+message AddBusinessAdminRequest {
+    string business_id = 1;
+    string user_id = 2;
+}
+
+message RemoveBusinessAdminRequest {
+    string business_id = 1;
+    string user_id = 2;
+}
+
+message SetBusinessOwnerRequest {
+    string business_id = 1;
+    string user_id = 2;
+}
+
+// example.com
+message ApplyBusinessOwnerRequest {
+    string business_id = 1;
+}
+
+// example.com
+message VerifyBusinessOwnerRequest {
+    string business_id = 1;
+}
+
+message ApplyBusinessOwnerResponse {
+    string meta_name = 1;
+    string meta_content = 2;
+}
+
+message SetBusinessAdminRequest {
+    string business_id = 1;
+    string user_id = 2;
+}
+
+message GeneralSuccess {
+  bool success = 1;
+  string message = 2;
+}
+message BusinessData{
+  string id = 1;
+  string name = 2 [(validate.rules).any.required = true,(validate.rules).string.min_len = 5];
+  string owner_email = 3[(validate.rules).string.email = true,(validate.rules).string.min_len = 5];
+  string owner_id = 4;
+  Address address = 5;
+  string phone_number = 6;
+  BusinessType business_type = 7[(validate.rules).any.required = true,(validate.rules).enum.defined_only = true];
+}
+message CreateBusinessData{
+  string business_name = 1 [(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];
+  string business_type = 2[(validate.rules).any.required = true];
+  string business_id = 3;
+  string owner_email = 4[(validate.rules).any.required = true,(validate.rules).string.email = true];
+  string password = 5[(validate.rules).any.required = true,(validate.rules).string.min_len  = 8];
+  string confirm_password = 6[(validate.rules).any.required = true,(validate.rules).string.min_len  = 8];
+  string owner_id = 7;
+}
+message CreateBusinessResponse {
+  string business_id = 1;
+  string admin_id = 2;
+  bool success =3;
+}
+message DeleteBusinessData{
+  string token = 1[(validate.rules).any.required = true,(validate.rules).string.min_len  = 10];;
+  string admin_email = 2[(validate.rules).any.required = true,(validate.rules).string.email = true];
+  string admin_id = 3[(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];
+}
+message UpdateBusinessData{
+  string token = 1[(validate.rules).any.required = true,(validate.rules).string.min_len  = 10];;
+  string business_id = 2[(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];
+  string updater_id = 3[(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];;
+  Address store_address = 4;
+  string phone_number = 5;
+}
+
+
+
+message Address{
+  string suite_number = 1;
+  string street_type = 2;
+  string street_name = 3 [(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];
+  string unit = 4;
+  string zip_code = 5 [(validate.rules).any.required = true,(validate.rules).string.min_len  = 5];
+  string county = 6;
+  string state = 7 [(validate.rules).any.required = true,(validate.rules).string.min_len = 1];
+  string country = 8;
+  
+
+}
+enum BusinessType {
+  RETAIL = 0;
+  RESTAURANT = 1;
+}

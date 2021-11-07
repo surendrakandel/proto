@@ -33,181 +33,23 @@ var (
 	_ = anypb.Any{}
 )
 
-// Validate checks the field values on All with the rules defined in the proto
-// definition for this message. If any rules are violated, an error is returned.
-func (m *All) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Kind
-
-	// no validation rules for Path
-
-	return nil
-}
-
-// AllValidationError is the validation error returned by All.Validate if the
-// designated constraints aren't met.
-type AllValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e AllValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e AllValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e AllValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e AllValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e AllValidationError) ErrorName() string { return "AllValidationError" }
-
-// Error satisfies the builtin error interface
-func (e AllValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sAll.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = AllValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = AllValidationError{}
-
-// Validate checks the field values on ModifyRightsRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *ModifyRightsRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for UserId
-
-	if v, ok := interface{}(m.GetBanReview()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ModifyRightsRequestValidationError{
-				field:  "BanReview",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// ModifyRightsRequestValidationError is the validation error returned by
-// ModifyRightsRequest.Validate if the designated constraints aren't met.
-type ModifyRightsRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ModifyRightsRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ModifyRightsRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ModifyRightsRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ModifyRightsRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ModifyRightsRequestValidationError) ErrorName() string {
-	return "ModifyRightsRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e ModifyRightsRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sModifyRightsRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ModifyRightsRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ModifyRightsRequestValidationError{}
-
-// Validate checks the field values on ShortUsers with the rules defined in the
+// Validate checks the field values on SayHi with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
-func (m *ShortUsers) Validate() error {
+func (m *SayHi) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	for idx, item := range m.GetUsers() {
-		_, _ = idx, item
+	// no validation rules for Hello
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ShortUsersValidationError{
-					field:  fmt.Sprintf("Users[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
+	// no validation rules for Success
 
 	return nil
 }
 
-// ShortUsersValidationError is the validation error returned by
-// ShortUsers.Validate if the designated constraints aren't met.
-type ShortUsersValidationError struct {
+// SayHiValidationError is the validation error returned by SayHi.Validate if
+// the designated constraints aren't met.
+type SayHiValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -215,22 +57,22 @@ type ShortUsersValidationError struct {
 }
 
 // Field function returns field value.
-func (e ShortUsersValidationError) Field() string { return e.field }
+func (e SayHiValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ShortUsersValidationError) Reason() string { return e.reason }
+func (e SayHiValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ShortUsersValidationError) Cause() error { return e.cause }
+func (e SayHiValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ShortUsersValidationError) Key() bool { return e.key }
+func (e SayHiValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ShortUsersValidationError) ErrorName() string { return "ShortUsersValidationError" }
+func (e SayHiValidationError) ErrorName() string { return "SayHiValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ShortUsersValidationError) Error() string {
+func (e SayHiValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -242,14 +84,14 @@ func (e ShortUsersValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sShortUsers.%s: %s%s",
+		"invalid %sSayHi.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ShortUsersValidationError{}
+var _ error = SayHiValidationError{}
 
 var _ interface {
 	Field() string
@@ -257,707 +99,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ShortUsersValidationError{}
-
-// Validate checks the field values on ShortUser with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *ShortUser) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Id
-
-	// no validation rules for TtId
-
-	// no validation rules for FirstName
-
-	// no validation rules for MiddleName
-
-	// no validation rules for LastName
-
-	// no validation rules for Photo
-
-	// no validation rules for PhotoRec
-
-	// no validation rules for BanReview
-
-	return nil
-}
-
-// ShortUserValidationError is the validation error returned by
-// ShortUser.Validate if the designated constraints aren't met.
-type ShortUserValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ShortUserValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ShortUserValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ShortUserValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ShortUserValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ShortUserValidationError) ErrorName() string { return "ShortUserValidationError" }
-
-// Error satisfies the builtin error interface
-func (e ShortUserValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sShortUser.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ShortUserValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ShortUserValidationError{}
-
-// Validate checks the field values on GetByIdRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *GetByIdRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for UserId
-
-	return nil
-}
-
-// GetByIdRequestValidationError is the validation error returned by
-// GetByIdRequest.Validate if the designated constraints aren't met.
-type GetByIdRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e GetByIdRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e GetByIdRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e GetByIdRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e GetByIdRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e GetByIdRequestValidationError) ErrorName() string { return "GetByIdRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e GetByIdRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sGetByIdRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = GetByIdRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = GetByIdRequestValidationError{}
-
-// Validate checks the field values on GetByIdsRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *GetByIdsRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	return nil
-}
-
-// GetByIdsRequestValidationError is the validation error returned by
-// GetByIdsRequest.Validate if the designated constraints aren't met.
-type GetByIdsRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e GetByIdsRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e GetByIdsRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e GetByIdsRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e GetByIdsRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e GetByIdsRequestValidationError) ErrorName() string { return "GetByIdsRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e GetByIdsRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sGetByIdsRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = GetByIdsRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = GetByIdsRequestValidationError{}
-
-// Validate checks the field values on AuthRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *AuthRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Token
-
-	return nil
-}
-
-// AuthRequestValidationError is the validation error returned by
-// AuthRequest.Validate if the designated constraints aren't met.
-type AuthRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e AuthRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e AuthRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e AuthRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e AuthRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e AuthRequestValidationError) ErrorName() string { return "AuthRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e AuthRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sAuthRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = AuthRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = AuthRequestValidationError{}
-
-// Validate checks the field values on MicrosoftAuthRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *MicrosoftAuthRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Code
-
-	return nil
-}
-
-// MicrosoftAuthRequestValidationError is the validation error returned by
-// MicrosoftAuthRequest.Validate if the designated constraints aren't met.
-type MicrosoftAuthRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e MicrosoftAuthRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e MicrosoftAuthRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e MicrosoftAuthRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e MicrosoftAuthRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e MicrosoftAuthRequestValidationError) ErrorName() string {
-	return "MicrosoftAuthRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e MicrosoftAuthRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sMicrosoftAuthRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = MicrosoftAuthRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = MicrosoftAuthRequestValidationError{}
-
-// Validate checks the field values on YahooAuthRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *YahooAuthRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Code
-
-	return nil
-}
-
-// YahooAuthRequestValidationError is the validation error returned by
-// YahooAuthRequest.Validate if the designated constraints aren't met.
-type YahooAuthRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e YahooAuthRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e YahooAuthRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e YahooAuthRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e YahooAuthRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e YahooAuthRequestValidationError) ErrorName() string { return "YahooAuthRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e YahooAuthRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sYahooAuthRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = YahooAuthRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = YahooAuthRequestValidationError{}
-
-// Validate checks the field values on FacebookAuthRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *FacebookAuthRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Code
-
-	return nil
-}
-
-// FacebookAuthRequestValidationError is the validation error returned by
-// FacebookAuthRequest.Validate if the designated constraints aren't met.
-type FacebookAuthRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e FacebookAuthRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e FacebookAuthRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e FacebookAuthRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e FacebookAuthRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e FacebookAuthRequestValidationError) ErrorName() string {
-	return "FacebookAuthRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e FacebookAuthRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sFacebookAuthRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = FacebookAuthRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = FacebookAuthRequestValidationError{}
-
-// Validate checks the field values on AppleAuthRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *AppleAuthRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Code
-
-	return nil
-}
-
-// AppleAuthRequestValidationError is the validation error returned by
-// AppleAuthRequest.Validate if the designated constraints aren't met.
-type AppleAuthRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e AppleAuthRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e AppleAuthRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e AppleAuthRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e AppleAuthRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e AppleAuthRequestValidationError) ErrorName() string { return "AppleAuthRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e AppleAuthRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sAppleAuthRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = AppleAuthRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = AppleAuthRequestValidationError{}
-
-// Validate checks the field values on GoogleAuthRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *GoogleAuthRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Code
-
-	return nil
-}
-
-// GoogleAuthRequestValidationError is the validation error returned by
-// GoogleAuthRequest.Validate if the designated constraints aren't met.
-type GoogleAuthRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e GoogleAuthRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e GoogleAuthRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e GoogleAuthRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e GoogleAuthRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e GoogleAuthRequestValidationError) ErrorName() string {
-	return "GoogleAuthRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e GoogleAuthRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sGoogleAuthRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = GoogleAuthRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = GoogleAuthRequestValidationError{}
-
-// Validate checks the field values on SelfUser with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *SelfUser) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Id
-
-	// no validation rules for VkId
-
-	// no validation rules for Token
-
-	// no validation rules for FirstName
-
-	// no validation rules for MiddleName
-
-	// no validation rules for LastName
-
-	// no validation rules for Photo
-
-	// no validation rules for PhotoRec
-
-	return nil
-}
-
-// SelfUserValidationError is the validation error returned by
-// SelfUser.Validate if the designated constraints aren't met.
-type SelfUserValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e SelfUserValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e SelfUserValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e SelfUserValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e SelfUserValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e SelfUserValidationError) ErrorName() string { return "SelfUserValidationError" }
-
-// Error satisfies the builtin error interface
-func (e SelfUserValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sSelfUser.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = SelfUserValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = SelfUserValidationError{}
+} = SayHiValidationError{}
 
 // Validate checks the field values on SignUpUserData with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1011,32 +153,17 @@ func (m *SignUpUserData) Validate() error {
 		}
 	}
 
-	if len(m.GetRoles()) > 0 {
-
-		if len(m.GetRoles()) != 5 {
+	if v, ok := interface{}(m.GetRoles()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
 			return SignUpUserDataValidationError{
 				field:  "Roles",
-				reason: "value must contain exactly 5 item(s)",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
-		for idx, item := range m.GetRoles() {
-			_, _ = idx, item
-
-			if val := item; val < 0 || val >= 5 {
-				return SignUpUserDataValidationError{
-					field:  fmt.Sprintf("Roles[%v]", idx),
-					reason: "value must be inside range [0, 5)",
-				}
-			}
-
-		}
-
 	}
 
 	// no validation rules for PhoneNumber
-
-	// no validation rules for Version
 
 	return nil
 }
@@ -1190,27 +317,14 @@ func (m *UserAccount) Validate() error {
 		}
 	}
 
-	if len(m.GetRoles()) > 0 {
-
-		if l := len(m.GetRoles()); l < 5 || l > 7 {
+	if v, ok := interface{}(m.GetRoles()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
 			return UserAccountValidationError{
 				field:  "Roles",
-				reason: "value must contain between 5 and 7 items, inclusive",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
-		for idx, item := range m.GetRoles() {
-			_, _ = idx, item
-
-			if val := item; val < 0 || val >= 5 {
-				return UserAccountValidationError{
-					field:  fmt.Sprintf("Roles[%v]", idx),
-					reason: "value must be inside range [0, 5)",
-				}
-			}
-
-		}
-
 	}
 
 	// no validation rules for PhoneNumber
@@ -1254,8 +368,6 @@ func (m *UserAccount) Validate() error {
 			}
 		}
 	}
-
-	// no validation rules for Version
 
 	return nil
 }
